@@ -35,7 +35,7 @@ function About() {
   };
 
   return (
-    <div className="px-6 pt-8">
+    <div className="mx-auto max-w-md px-6 pt-8 md:pt-12">
       <h1 className="mb-8 text-2xl font-bold text-gray-900">Mi cuenta</h1>
 
       {/* Avatar */}
