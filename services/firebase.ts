@@ -14,7 +14,7 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Evita reinicializar en hot-reload / SSR
+// Evita reinicializar en hot-reload
 export const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
