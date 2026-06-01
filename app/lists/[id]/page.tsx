@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { TabBar } from "@/components/TabBar";
 import { TaskItem } from "@/components/TaskItem";
 import { FormModal } from "@/components/FormModal";
 import { ConfirmModal } from "@/components/ConfirmModal";
@@ -105,7 +106,8 @@ function Detail() {
     tasks.length === 0 ? 0 : Math.round((completed / tasks.length) * 100);
 
   return (
-    <div className="mx-auto min-h-screen w-full max-w-md bg-white p-4 pb-24">
+    <div className="min-h-screen bg-gray-50 md:pl-60">
+      <div className="mx-auto min-h-screen w-full max-w-md bg-white p-4 pb-24 md:max-w-3xl md:bg-gray-50 md:p-8">
       {/* Header con back */}
       <div className="mb-4 flex items-center gap-2">
         <button
@@ -195,7 +197,7 @@ function Detail() {
       {!loading && !error && (
         <button
           onClick={() => setShowCreate(true)}
-          className="fixed bottom-8 left-1/2 z-20 ml-[140px] flex h-14 w-14 items-center justify-center rounded-full bg-[#005BBF] text-3xl font-light text-white shadow-lg shadow-[#005BBF]/40 hover:bg-[#0049a0]"
+          className="fixed bottom-8 right-1/2 z-20 mr-[-160px] flex h-14 w-14 items-center justify-center rounded-full bg-[#005BBF] text-3xl font-light text-white shadow-lg shadow-[#005BBF]/40 hover:bg-[#0049a0] md:bottom-10 md:right-10 md:mr-0"
           aria-label="Crear tarea"
         >
           +
@@ -235,6 +237,8 @@ function Detail() {
         onClose={() => setToDelete(null)}
         onConfirm={handleDelete}
       />
+      </div>
+      <TabBar />
     </div>
   );
 }

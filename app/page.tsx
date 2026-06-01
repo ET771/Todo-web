@@ -74,7 +74,7 @@ function Home() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 md:p-8">
       <header className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Mis listas</h1>
         <p className="mt-1 text-sm text-gray-500">
@@ -124,7 +124,7 @@ function Home() {
       )}
 
       {!loading && !error && lists.length > 0 && (
-        <div>
+        <div className="md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
           {lists.map((item) => (
             <TaskListCard
               key={item.id}

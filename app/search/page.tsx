@@ -55,14 +55,14 @@ function Search() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 md:p-8">
       <h1 className="mb-4 text-2xl font-bold text-gray-900">Buscar</h1>
 
       <input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Buscar listas y tareas..."
-        className="mb-4 w-full rounded-xl bg-gray-100 px-4 py-3 text-gray-900 outline-none focus:ring-2 focus:ring-[#005BBF]/30"
+        className="mb-4 w-full rounded-xl bg-gray-100 px-4 py-3 text-gray-900 outline-none focus:ring-2 focus:ring-[#005BBF]/30 md:max-w-xl"
       />
 
       {loading && (
@@ -95,6 +95,7 @@ function Search() {
           <p className="mb-3 text-sm text-gray-500">
             {results.length} resultado{results.length !== 1 ? "s" : ""}
           </p>
+          <div className="md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
           {results.map((item) => (
             <button
               key={item.id}
@@ -123,6 +124,7 @@ function Search() {
               ) : null}
             </button>
           ))}
+          </div>
         </>
       )}
     </div>

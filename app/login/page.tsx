@@ -15,7 +15,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Si ya hay sesion, no mostrar login
+  // Unica fuente de redireccion: cuando el estado de auth confirma la sesion.
+  // Asi se evita el bucle login <-> home por redirecciones que compiten.
   useEffect(() => {
     if (!authLoading && user) router.replace("/");
   }, [authLoading, user, router]);
@@ -30,7 +31,8 @@ export default function LoginPage() {
       setLoading(true);
       setError(null);
       await login(email, password);
-      router.replace("/");
+      // No redirigimos aqui: el useEffect de arriba lo hara cuando
+      // onAuthStateChanged confirme el usuario (evita el race condition).
     } catch (err: unknown) {
       const code = (err as { code?: string })?.code;
       const msg =
@@ -40,9 +42,9 @@ export default function LoginPage() {
           ? "Email o contrasena incorrectos"
           : "Error al iniciar sesion. Intenta de nuevo.";
       setError(msg);
-    } finally {
       setLoading(false);
     }
+    // Si fue exito, mantenemos loading=true hasta que el useEffect redirija
   };
 
   return (
