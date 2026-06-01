@@ -1,5 +1,9 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  setPersistence,
+  browserLocalPersistence,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -13,5 +17,9 @@ const firebaseConfig = {
 // Evita reinicializar en hot-reload / SSR
 export const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-// La persistencia por defecto en web (browserLocalPersistence) mantiene la sesion
 export const auth = getAuth(app);
+
+// Persistencia explicita en el navegador para que la sesion sobreviva recargas
+if (typeof window !== "undefined") {
+  setPersistence(auth, browserLocalPersistence).catch(() => {});
+}
