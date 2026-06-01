@@ -1,17 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { register } from "@/services/authService";
+import { useAuth } from "@/context/AuthContext";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Redirige cuando el estado de auth confirma la sesion (evita el bucle)
+  useEffect(() => {
+    if (!authLoading && user) router.replace("/");
+  }, [authLoading, user, router]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +30,7 @@ export default function RegisterPage() {
       setLoading(true);
       setError(null);
       await register(fullName, email, password);
-      router.replace("/");
+      // El useEffect redirige cuando onAuthStateChanged confirme el usuario
     } catch (err: unknown) {
       const code = (err as { code?: string })?.code;
       const msg =
@@ -33,7 +40,6 @@ export default function RegisterPage() {
             ? "La contrasena debe tener al menos 6 caracteres"
             : "No se pudo crear la cuenta. Intenta de nuevo.";
       setError(msg);
-    } finally {
       setLoading(false);
     }
   };
