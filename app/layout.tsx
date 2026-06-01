@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   description: "Gestion de listas de tareas - version web",
 };
 
+// Renderizado dinamico: la app depende de Firebase Auth (cliente), no tiene
+// sentido prerenderizar estaticamente. Evita que el build ejecute getAuth en
+// el servidor sin las variables de entorno publicas.
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({
   children,
 }: {
